@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - ClosetMate</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-default">
+  <div class="settings-container">
+    <div class="settings-card">
+      <h2>⚙️ Settings</h2>
+
+      <!-- ================= ACCOUNT ================= -->
+      <section class="settings-section">
+        <h3>👤 Account</h3>
+
+        <div class="form-field">
+          <input type="text" id="name" placeholder=" " required>
+          <label for="name">Name</label>
+        </div>
+
+        <div class="form-field">
+          <input type="email" id="email" placeholder=" " value="user@email.com" readonly>
+          <label for="email">Email</label>
+        </div>
+
+        <button class="btn">Change Password</button>
+
+        <div class="connected-accounts">
+          <label class="toggle-wrapper">
+            <span>Google</span>
+            <input type="checkbox" checked>
+            <span class="toggle-slider"></span>
+          </label>
+          <label class="toggle-wrapper">
+            <span>Facebook</span>
+            <input type="checkbox">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <button class="btn logout-btn">Logout</button>
+      </section>
+
+      <!-- ================= PLANNER & AI ================= -->
+      <section class="settings-section">
+        <h3>📆 Planner & AI Settings</h3>
+
+        <div class="form-field">
+          <select id="planning-range">
+            <option selected>3 days</option>
+            <option>5 days</option>
+            <option>7 days</option>
+          </select>
+          <label for="planning-range">Outfit Planning Range</label>
+        </div>
+
+        <label class="toggle-wrapper">
+          <span>AI Suggestions</span>
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+
+        <div class="form-field">
+          <select id="strictness">
+            <option>Conservative</option>
+            <option selected>Balanced</option>
+            <option>Experimental</option>
+          </select>
+          <label for="strictness">Suggestion Strictness</label>
+        </div>
+      </section>
+
+      <!-- ================= NOTIFICATIONS ================= -->
+      <section class="settings-section">
+        <h3>🔔 Notifications</h3>
+
+        <label class="toggle-wrapper">
+          <span>Daily Outfit Reminder</span>
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+
+        <div class="form-field">
+          <select id="reminder-time">
+            <option>Morning</option>
+            <option>Noon</option>
+            <option>Evening</option>
+            <option>Custom</option>
+          </select>
+          <label for="reminder-time">Reminder Time</label>
+        </div>
+
+        <label class="toggle-wrapper">
+          <span>Event-based Reminders</span>
+          <input type="checkbox">
+          <span class="toggle-slider"></span>
+        </label>
+      </section>
+
+      <!-- ================= APP SETTINGS ================= -->
+      <section class="settings-section">
+        <h3>🎨 App Settings</h3>
+
+        <div class="form-field">
+          <select id="theme">
+            <option value="theme-default" selected>Default</option>
+            <option value="theme-sunset">Sunset</option>
+            <option value="theme-nature">Nature</option>
+            <option value="theme-dark">Dark</option>
+          </select>
+          <label for="theme">Theme</label>
+        </div>
+
+        <div class="form-field">
+          <select id="units">
+            <option selected>°C / cm</option>
+            <option>°F / inches</option>
+          </select>
+          <label for="units">Units</label>
+        </div>
+      </section>
+
+      <!-- ================= PRIVACY ================= -->
+      <section class="settings-section">
+        <h3>🔒 Privacy & Security</h3>
+        <button class="btn">Download My Closet Data</button>
+        <button class="btn danger-btn">Delete Account</button>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

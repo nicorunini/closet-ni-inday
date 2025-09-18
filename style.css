@@ -9,20 +9,21 @@
 /* ===========================
    1. Base Theme Variables
 =========================== */
-:root{
-  --color-primary: #6366f1;
-  --color-secondary: #06b6d4;
-  --color-bg-gradient: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-  --color-text: #ffffff;
-  --color-text-muted: rgba(255,255,255,0.8);
-  --color-text-light: rgba(255,255,255,0.7);
-  --color-border: rgba(255,255,255,0.2);
-  --color-border-light: rgba(255,255,255,0.3);
-  --color-bg-blur: rgba(255,255,255,0.08);
-  --color-error: #ef4444;
-  --color-success: #22c55e;
-  --shadow-primary: rgba(99,102,241,0.4);
-  --shadow-hover: rgba(99,102,241,0.6);
+:root {
+  /* Default Theme - Earthy Tones */
+  --color-primary: #70798C; /* muted blue-grey, good for accents */
+  --color-secondary: #A99985; /* warm taupe secondary */
+  --color-bg-gradient: linear-gradient(135deg, #F5F1ED 0%, #DAD2BC 100%);
+  --color-text: #252323; /* deep charcoal for strong readability */
+  --color-text-muted: rgba(37,35,35,0.8);
+  --color-text-light: rgba(37,35,35,0.6);
+  --color-border: rgba(37,35,35,0.15);
+  --color-border-light: rgba(37,35,35,0.25);
+  --color-bg-blur: rgba(245,241,237,0.6); /* softened ivory background */
+  --color-error: #ef4444; /* red kept for alerts */
+  --color-success: #22c55e; /* green kept for alerts */
+  --shadow-primary: rgba(112,121,140,0.28); /* from muted blue-grey */
+  --shadow-hover: rgba(112,121,140,0.38);
 
   /* spacing scale */
   --space-xs: 6px;
@@ -33,33 +34,46 @@
 }
 
 /* Theme variants */
-.theme-default{ /* kept for compatibility */ }
-.theme-sunset{
-  --color-primary: #ff6a88;
-  --color-secondary: #ff99ac;
-  --color-bg-gradient: linear-gradient(135deg,#ff6a88 0%,#ff99ac 100%);
-  --shadow-primary: rgba(255,106,136,0.18);
-  --shadow-hover: rgba(255,153,172,0.28);
+.theme-default { /* kept for compatibility */ }
+
+.theme-sunset {
+  /* Soft Ivory / Warm variation */
+  --color-primary: #F3D8C7; 
+  --color-secondary: #D0B8AC;
+  --color-bg-gradient: linear-gradient(135deg, #EFE5DC 0%, #F3D8C7 100%);
+  --color-text: #0D0B0A;
+  --color-text-muted: rgba(13,11,10,0.75);
+  --color-text-light: rgba(13,11,10,0.55);
+  --shadow-primary: rgba(243,216,199,0.28);
+  --shadow-hover: rgba(208,184,172,0.36);
 }
-.theme-nature{
-  --color-primary: #16a34a;
-  --color-secondary: #4ade80;
-  --color-bg-gradient: linear-gradient(135deg,#16a34a 0%,#4ade80 100%);
-  --shadow-primary: rgba(22,163,74,0.18);
-  --shadow-hover: rgba(74,222,128,0.28);
+
+.theme-nature {
+  /* Soft Serenity */
+  --color-primary: #A6A2A2; 
+  --color-secondary: #847577;
+  --color-bg-gradient: linear-gradient(135deg, #FBFBF2 0%, #CFD2CD 100%);
+  --color-text: #252323;
+  --color-text-muted: rgba(37,35,35,0.75);
+  --color-text-light: rgba(37,35,35,0.55);
+  --shadow-primary: rgba(166,162,162,0.28);
+  --shadow-hover: rgba(132,117,119,0.36);
 }
-.theme-dark{
-  --color-primary: #0ea5e9;
-  --color-secondary: #3b82f6;
-  --color-bg-gradient: linear-gradient(135deg,#0f172a 0%,#1e293b 100%);
-  --color-text: #f1f5f9;
-  --color-text-muted: rgba(241,245,249,0.75);
-  --color-text-light: rgba(241,245,249,0.6);
+
+.theme-dark {
+  /* Earthy dark mode */
+  --color-primary: #70798C; 
+  --color-secondary: #A99985;
+  --color-bg-gradient: linear-gradient(135deg, #252323 0%, #70798C 100%);
+  --color-text: #F5F1ED; 
+  --color-text-muted: rgba(245,241,237,0.75);
+  --color-text-light: rgba(245,241,237,0.55);
   --color-border: rgba(255,255,255,0.08);
-  --color-bg-blur: rgba(255,255,255,0.03);
-  --shadow-primary: rgba(14,165,233,0.14);
-  --shadow-hover: rgba(59,130,246,0.22);
+  --color-bg-blur: rgba(255,255,255,0.04);
+  --shadow-primary: rgba(112,121,140,0.22);
+  --shadow-hover: rgba(169,153,133,0.32);
 }
+
 
 /* ===========================
    2. Global Reset & Layout
@@ -376,49 +390,94 @@ body{
 .remember-wrapper input[type="checkbox"]:checked ~ .checkbox-label .checkmark::after{ content:'✓'; color:var(--color-text); font-size:11px; font-weight:700; }
 
 /* switch / toggle component */
-.switch{
-  display:inline-block;
-  vertical-align:middle;
-  width:48px;
-  height:26px;
-  border-radius:999px;
-  background: rgba(255,255,255,0.08);
-  position:relative;
-  transition: background .25s ease, box-shadow .25s ease;
-  border:1px solid var(--color-border);
+/* Hide default checkbox */
+input[type="checkbox"] {
+  display: none;
 }
-.switch input{ opacity:0; width:0; height:0; position:absolute; }
-.switch .knob{
-  position:absolute;
-  top:3px;
-  left:3px;
-  height:20px;
-  width:20px;
-  border-radius:50%;
-  background:#fff;
-  transition: transform .25s cubic-bezier(.2,.9,.2,1);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+
+/* Toggle track */
+.toggle {
+  background-color: grey;
+  width: 40px;       /* smaller width */
+  height: 20px;      /* smaller height */
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
-.switch input:checked + .knob{ transform: translateX(22px); }
-.switch input:checked ~ & { background: var(--color-secondary); }
+
+/* Toggle knob */
+.slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: 16px;
+  width: 16px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+/* Checked state */
+input:checked + .toggle {
+  background-color: green;
+}
+input:checked + .toggle .slider {
+  transform: translateX(20px); /* slides right */
+}
+
+
+
+/* === Icon Scaling === */
+button img,
+.file-upload label img {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+header .logo {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
 
 /* ===========================
    9. Tag Input / Pills
 =========================== */
-.tag-input{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  align-items:center;
-  padding:8px;
-  border-radius:12px;
-  border:1px solid var(--color-border);
-  background: rgba(255,255,255,0.03);
+.tag-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px;
+  background: var(--glass-light);
+  border-radius: 12px;
 }
-.tag-input input{ border:none; background:transparent; color:var(--color-text); padding:6px; min-width:120px; outline:none; }
-.tag{ display:inline-flex; align-items:center; gap:8px; background: rgba(255,255,255,0.06); padding:6px 10px; border-radius:10px; font-size:14px; color:var(--color-text); }
-.tag .remove-tag{ cursor:pointer; color:var(--color-text-light); font-weight:600; }
-
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: default;
+}
+.tag .remove {
+  cursor: pointer;
+  font-weight: bold;
+}
+.tag-input input {
+  border: none;
+  background: transparent;
+  flex: 1;
+  padding: 6px;
+  outline: none;
+  min-width: 80px;
+}
 /* ===========================
    10. Dropdown / Select styling
 =========================== */
@@ -549,3 +608,74 @@ option{ background:rgba(0,0,0,0.6); color:var(--color-text); }
 .login-card{ /* login-card already defined above via alias */ }
 .input-wrapper textarea{ min-height:100px; resize:vertical; }
 
+/* ===========================
+   Extra Globals (Settings / Planner / Onboarding)
+=========================== */
+
+/* Read-only fields (like Email in Settings) */
+.input-wrapper input[readonly] {
+  background: rgba(255,255,255,0.04);
+  color: var(--color-text-light);
+  cursor: not-allowed;
+}
+
+/* Toggle switch enhancements */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--color-border);
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.switch .knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.25s cubic-bezier(.2,.9,.2,1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.switch input:checked + .knob {
+  transform: translateX(22px);
+}
+.switch input:checked ~ .switch {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  box-shadow: 0 4px 14px var(--shadow-primary);
+}
+
+/* Custom select arrow fix */
+.input-wrapper select {
+  appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23ffffff' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+/* Icons inside buttons and labels */
+button img,
+.file-upload label img,
+header .logo {
+  width: 16px;   /* small, consistent */
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 6px; /* spacing before text */
+}
+
+/* Header logo can be slightly larger */
+header .logo {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}

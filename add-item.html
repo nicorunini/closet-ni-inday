@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorphism Login Form</title>
+    <link rel="stylesheet" href="style.css">
+<head>
+  <meta charset="UTF-8">
+  <title>Add New Item - ClosetMate</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Add New Item</h1>
+    <a href="closet.html">← Back to Closet</a>
+  </header>
+
+  <form action="/add-item" method="POST" enctype="multipart/form-data" class="item-form">
+    <label>Upload Photo</label>
+    <input type="file" name="photo" accept="image/*">
+
+    <label>Name</label>
+    <input type="text" name="name" required>
+
+    <label>Category</label>
+    <select name="category">
+      <option>Top</option>
+      <option>Bottom</option>
+      <option>Shoes</option>
+      <option>Accessory</option>
+    </select>
+
+    <label>Brand</label>
+    <input type="text" name="brand">
+
+    <label>Size</label>
+    <input type="text" name="size">
+
+    <label>Color</label>
+    <input type="text" name="color">
+
+    <label>Material</label>
+    <input type="text" name="material">
+
+    <label>Season</label>
+    <select name="season">
+      <option>All</option>
+      <option>Summer</option>
+      <option>Winter</option>
+      <option>Spring</option>
+      <option>Fall</option>
+    </select>
+
+    <label>Tags</label>
+    <input type="text" name="tags" placeholder="casual, work, streetwear">
+
+    <button type="submit">Save Item</button>
+    <button type="reset">Cancel</button>
+  </form>
+</body>
+</html>

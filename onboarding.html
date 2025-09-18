@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onboarding - ClosetMate</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Tag input styling */
+    .tag-input-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+    .tag-input-wrapper input {
+      border: none;
+      background: transparent;
+      outline: none;
+      color: white;
+      flex: 1;
+      min-width: 120px;
+    }
+    .tag {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255,255,255,0.25);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: white;
+      cursor: default;
+    }
+    .tag button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    /* Predetermined tag options */
+    .tag-options {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag-option {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .tag-option:hover {
+      background: rgba(255,255,255,0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <h2>Welcome to ClosetMate</h2>
+        <p>Let’s set up your profile</p>
+      </div>
+
+      <form class="login-form" id="onboardingForm" novalidate>
+        
+        <!-- Nickname -->
+        <div class="form-group">
+          <div class="input-wrapper">
+            <input type="text" id="nickname" name="nickname" required>
+            <label for="nickname">Nickname</label>
+            <span class="focus-border"></span>
+          </div>
+        </div>
+
+        <!-- Profile Upload -->
+        <div class="form-group">
+          <label for="profile" class="upload-label">Upload Profile Picture</label>
+          <input type="file" id="profile" name="profile" accept="image/*">
+        </div>
+
+        <!-- Styles -->
+        <div class="form-group">
+            <label>Preferred Styles</label>
+            <div class="tag-input-wrapper" id="stylesWrapper">
+                <span class="tag">Casual <button type="button">&times;</button></span>
+                <span class="tag">Vintage <button type="button">&times;</button></span>
+                <span class="tag">Streetwear <button type="button">&times;</button></span>
+                <input type="text" id="styles" placeholder="Add more...">
+            </div>
+            </div>
+
+
+        <!-- Sizes -->
+        <div class="form-group">
+          <label>Your Sizes</label>
+          <div class="tag-input-wrapper" id="sizesWrapper">
+            <input type="text" id="sizes" placeholder="Type and press Enter">
+          </div>
+          <div class="tag-options">
+            <span class="tag-option" data-value="Small">Small</span>
+            <span class="tag-option" data-value="Medium">Medium</span>
+            <span class="tag-option" data-value="Large">Large</span>
+            <span class="tag-option" data-value="XL">XL</span>
+          </div>
+        </div>
+
+        <!-- Climate -->
+        <div class="form-group">
+          <label>Your Climate</label>
+          <div class="tag-input-wrapper" id="climateWrapper">
+            <input type="text" id="climate" placeholder="Type and press Enter">
+          </div>
+          <div class="tag-options">
+            <span class="tag-option" data-value="Tropical">Tropical</span>
+            <span class="tag-option" data-value="Cold">Cold</span>
+            <span class="tag-option" data-value="Dry">Dry</span>
+            <span class="tag-option" data-value="Humid">Humid</span>
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn btn">
+          <span class="btn-text">Start Now</span>
+          <span class="btn-loader"></span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Convert input values into tags
+    function setupTagInput(wrapperId) {
+      const wrapper = document.getElementById(wrapperId);
+      const input = wrapper.querySelector("input");
+
+      function addTag(text) {
+        if (!text.trim()) return;
+        const existingTags = wrapper.querySelectorAll(".tag");
+        if ([...existingTags].some(tag => tag.textContent.replace("×","").trim() === text)) return;
+
+        const tag = document.createElement("span");
+        tag.classList.add("tag");
+        tag.innerHTML = `${text} <button type="button">&times;</button>`;
+
+        tag.querySelector("button").addEventListener("click", () => tag.remove());
+
+        wrapper.insertBefore(tag, input);
+      }
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && input.value.trim() !== "") {
+          e.preventDefault();
+          addTag(input.value.trim());
+          input.value = "";
+        }
+      });
+
+      // Add support for clicking predefined options
+      wrapper.parentElement.querySelectorAll(".tag-option").forEach(option => {
+        option.addEventListener("click", () => {
+          addTag(option.dataset.value);
+        });
+      });
+    }
+
+    // Initialize tag inputs
+    setupTagInput("stylesWrapper");
+    setupTagInput("sizesWrapper");
+    setupTagInput("climateWrapper");
+
+    // Redirect to main menu
+    document.getElementById("onboardingForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      window.location.href = "menu.html"; // main menu page
+    });
+  </script>
+</body>
+</html>

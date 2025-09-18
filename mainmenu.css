@@ -1,0 +1,46 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #dad2bc;
+}
+
+header h1 {
+  margin: 20px 0;
+}
+
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 80px;
+  max-width: 900px;
+  margin: 80px auto;
+  text-align: center;   /* centers the text under icons */
+}
+
+.icon-button {
+  display: flex;
+  flex-direction: column;  /* stack icon + text vertically */
+  align-items: center;     /* center horizontally */
+  justify-content: center;
+  text-decoration: none;
+  color: #222;
+}
+
+.icon-button img {
+  width: 230px;
+  height: px;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.icon-button span {
+  font-size: 20px;
+  font-weight: bold;
+  color: #111;
+}
+
+
+
+.icon-button:hover {
+  transform: scale(1.1);
+}

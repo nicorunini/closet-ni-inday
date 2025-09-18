@@ -11,20 +11,32 @@ header h1 {
 .icon-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 80px;
-  max-width: 900px;
+  gap: 60px;
+  max-width: 1000px;
   margin: 80px auto;
-  text-align: center;   /* centers the text under icons */
 }
 
 .icon-button {
   display: flex;
-  flex-direction: column;  /* stack icon + text vertically */
-  align-items: center;     /* center horizontally */
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   text-decoration: none;
   color: #222;
 }
+
+.icon-button img {
+  width: 150px;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.icon-button span {
+  font-size: 20px;
+  font-weight: bold;
+  color: #111;
+}
+
 
 .icon-button img {
   width: 230px;
@@ -43,4 +55,41 @@ header h1 {
 
 .icon-button:hover {
   transform: scale(1.1);
+}
+
+
+.icon-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #222;
+  
+  /* apply glass effect */
+  background: var(--color-bg-blur, rgba(255, 255, 255, 0.2));
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  border: 1px solid var(--color-border, rgba(255,255,255,0.3));
+  border-radius: 24px;
+  padding: 40px 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.icon-button:hover {
+  transform: scale(1.08) translateY(-6px);
+  box-shadow: 0 14px 50px rgba(0,0,0,0.18);
+}
+
+.icon-button img {
+  width: 150px;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.icon-button span {
+  font-size: 20px;
+  font-weight: bold;
+  color: #111;
 }

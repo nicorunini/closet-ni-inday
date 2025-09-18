@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlassUI Interactive Form</title>
+  <style>
+    /* === THEME VARIABLES === */
+    :root {
+      /* Default Theme (Earthy Tones) */
+      --color-primary: #A99985; /* warm taupe */
+      --color-secondary: #70798C; /* muted blue-grey */
+      --color-bg-gradient: linear-gradient(135deg, #EFE5DC 0%, #F5F1ED 100%);
+      --color-text: #252323; /* deep earthy */
+      --color-text-muted: rgba(37,35,35,0.75);
+      --color-text-light: rgba(37,35,35,0.6);
+      --color-border: rgba(0,0,0,0.1);
+      --color-border-light: rgba(0,0,0,0.15);
+      --color-bg-blur: rgba(255,255,255,0.6);
+      --color-error: #ef4444;
+      --color-success: #22c55e;
+      --shadow-primary: rgba(169,153,133,0.25);
+      --shadow-hover: rgba(169,153,133,0.4);
+
+      /* spacing scale */
+      --space-xs: 6px;
+      --space-sm: 12px;
+      --space-md: 20px;
+      --space-lg: 32px;
+      --corner-lg: 12px;
+    }
+
+    .theme-default { /* kept for Earthy */ }
+
+    .theme-dark {
+      --color-primary: #70798C; 
+      --color-secondary: #A99985; 
+      --color-bg-gradient: linear-gradient(135deg, #252323 0%, #1e1c1c 100%);
+      --color-text: #F5F1ED; 
+      --color-text-muted: rgba(245,241,237,0.75);
+      --color-text-light: rgba(245,241,237,0.6);
+      --color-border: rgba(255,255,255,0.08);
+      --color-bg-blur: rgba(255,255,255,0.03);
+      --shadow-primary: rgba(112,121,140,0.22);
+      --shadow-hover: rgba(169,153,133,0.32);
+    }
+
+    .theme-sunset {
+      --color-primary: #F3D8C7; 
+      --color-secondary: #D0B8AC;
+      --color-bg-gradient: linear-gradient(135deg, #EFE5DC 0%, #F3D8C7 100%);
+      --color-text: #0D0B0A;
+      --color-text-muted: rgba(13,11,10,0.75);
+      --color-text-light: rgba(13,11,10,0.55);
+      --shadow-primary: rgba(243,216,199,0.28);
+      --shadow-hover: rgba(208,184,172,0.36);
+    }
+
+    .theme-nature {
+      --color-primary: #A6A2A2; 
+      --color-secondary: #847577;
+      --color-bg-gradient: linear-gradient(135deg, #FBFBF2 0%, #CFD2CD 100%);
+      --color-text: #252323;
+      --color-text-muted: rgba(37,35,35,0.75);
+      --color-text-light: rgba(37,35,35,0.55);
+      --shadow-primary: rgba(166,162,162,0.28);
+      --shadow-hover: rgba(132,117,119,0.36);
+    }
+
+    /* === BASE STYLES === */
+    body {
+      font-family: sans-serif;
+      background: var(--color-bg-gradient);
+      color: var(--color-text);
+      padding: 2rem;
+      transition: background 0.5s ease, color 0.3s ease;
+    }
+
+    .glass-card {
+      background: var(--color-bg-blur);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 16px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 4px 20px var(--shadow-primary);
+    }
+
+    h2 {
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 0.3rem;
+    }
+
+    /* Form fields */
+    .input-wrapper {
+      margin: 1rem 0;
+      position: relative;
+    }
+    .input-wrapper input,
+    .input-wrapper textarea,
+    .input-wrapper select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--color-border-light);
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+      background: rgba(255,255,255,0.7);
+      color: var(--color-text);
+    }
+    .input-wrapper label {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      pointer-events: none;
+      transition: 0.2s;
+    }
+    .input-wrapper input:focus + label,
+    .input-wrapper input:not(:placeholder-shown) + label,
+    .input-wrapper textarea:focus + label,
+    .input-wrapper textarea:not(:placeholder-shown) + label,
+    .input-wrapper select:focus + label,
+    .input-wrapper select:not([value=""]) + label {
+      top: -8px;
+      left: 8px;
+      font-size: 12px;
+      color: var(--color-primary);
+    }
+
+    /* Toggle */
+    .toggle-wrapper { display: flex; align-items: center; margin: 0.5rem 0; }
+    .toggle-wrapper input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+    .toggle {
+      position: relative;
+      width: 40px;
+      height: 20px;
+      background: grey;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+    .slider {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: white;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s ease;
+    }
+    input:checked + .toggle { background: var(--color-primary); }
+    input:checked + .toggle .slider { transform: translateX(20px); }
+
+    /* Tags */
+    .tag-input {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border: 1px solid var(--color-border);
+      padding: 0.5rem;
+      border-radius: 8px;
+    }
+    .tag {
+      background: var(--color-secondary);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.8rem;
+    }
+    .tag .remove { cursor: pointer; font-weight: bold; }
+    .tag-input input {
+      border: none;
+      outline: none;
+      flex: 1;
+      min-width: 80px;
+      background: transparent;
+    }
+
+    /* File Upload */
+    .file-upload { margin: 1rem 0; }
+    .file-upload label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      cursor: pointer;
+      background: white;
+    }
+    .file-name { margin-top: 0.5rem; font-size: 0.9rem; color: var(--color-text-muted); }
+
+    /* Buttons */
+    .form-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .btn {
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn-primary { background: var(--color-primary); color: white; }
+    .btn-secondary { background: var(--color-secondary); color: white; }
+    .btn-danger { background: var(--color-error); color: white; }
+    .btn-ghost { background: transparent; border: 1px solid var(--color-primary); color: var(--color-primary); }
+    .btn:hover { box-shadow: 0 4px 12px var(--shadow-hover); }
+
+    /* Preview */
+    .preview {
+      margin-top: 30px;
+      padding: 1rem;
+      border-radius: 12px;
+      background: var(--color-bg-blur);
+      backdrop-filter: blur(6px);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body class="theme-default">
+  <div class="glass-card">
+    <h2>User Form</h2>
+
+    <!-- Form fields -->
+    <div class="input-wrapper">
+      <input type="text" id="name" placeholder=" " oninput="updatePreview()">
+      <label for="name">Full Name</label>
+    </div>
+
+    <div class="input-wrapper">
+      <input type="email" id="email" placeholder=" " oninput="updatePreview()">
+      <label for="email">Email</label>
+    </div>
+
+    <div class="input-wrapper">
+      <input type="password" id="password" placeholder=" " oninput="updatePreview()">
+      <label for="password">Password</label>
+    </div>
+
+    <div class="input-wrapper">
+      <input type="number" id="age" placeholder=" " min="1" oninput="updatePreview()">
+      <label for="age">Age</label>
+    </div>
+
+    <div class="input-wrapper">
+      <input type="date" id="dob" placeholder=" " onchange="updatePreview()">
+      <label for="dob">Date of Birth</label>
+    </div>
+
+    <div class="input-wrapper">
+      <select id="gender" onchange="updatePreview()">
+        <option value="" disabled selected>Select Gender</option>
+        <option value="Female">Female</option>
+        <option value="Male">Male</option>
+        <option value="Other">Other</option>
+      </select>
+      <label for="gender">Gender</label>
+    </div>
+
+    <div class="input-wrapper">
+      <textarea id="bio" placeholder=" " rows="3" oninput="updatePreview()"></textarea>
+      <label for="bio">Short Bio</label>
+    </div>
+
+    <!-- Toggles -->
+    <div class="toggle-wrapper">
+      <input type="checkbox" id="notif" onchange="updatePreview()">
+      <label for="notif" class="toggle"><div class="slider"></div></label>
+      Notifications
+    </div>
+
+    <div class="toggle-wrapper">
+      <input type="checkbox" id="darkmode" checked onchange="updatePreview()">
+      <label for="darkmode" class="toggle"><div class="slider"></div></label>
+      Dark Mode
+    </div>
+
+    <!-- Tags -->
+    <h2>Tags</h2>
+    <div class="tag-input" id="tagBox">
+      <span class="tag">Casual <span class="remove">&times;</span></span>
+      <span class="tag">Formal <span class="remove">&times;</span></span>
+      <input type="text" id="tagInput" placeholder="Add a tag...">
+    </div>
+
+    <!-- File Upload -->
+    <h2>File Upload</h2>
+    <div class="file-upload">
+      <input type="file" id="upload" hidden>
+      <label for="upload">📁 Choose a file</label>
+      <div class="file-name" id="fileName">No file chosen</div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="form-actions">
+      <button class="btn btn-primary">✔ Save</button>
+      <button class="btn btn-secondary">⚙ Settings</button>
+      <button class="btn btn-danger">🗑 Delete</button>
+      <button class="btn btn-ghost">👁 View</button>
+    </div>
+
+    <!-- Preview -->
+    <div class="preview" id="previewBox">
+      <h3>Live Preview</h3>
+      <p><strong>Name:</strong> <span id="prevName"></span></p>
+      <p><strong>Email:</strong> <span id="prevEmail"></span></p>
+      <p><strong>Password:</strong> <span id="prevPassword"></span></p>
+      <p><strong>Age:</strong> <span id="prevAge"></span></p>
+      <p><strong>Date of Birth:</strong> <span id="prevDob"></span></p>
+      <p><strong>Gender:</strong> <span id="prevGender"></span></p>
+      <p><strong>Bio:</strong> <span id="prevBio"></span></p>
+      <p><strong>Notifications:</strong> <span id="prevNotif"></span></p>
+      <p><strong>Dark Mode:</strong> <span id="prevDark"></span></p>
+      <p><strong>Selected Tags:</strong> <span id="prevTags"></span></p>
+      <p><strong>File:</strong> <span id="prevFile"></span></p>
+    </div>
+  </div>
+
+  <!-- Theme Dropdown -->
+  <div class="input-wrapper" style="max-width:600px; margin:20px auto;">
+    <select id="themeSelector" onchange="setTheme(this.value)">
+      <option value="default" selected>Default (Earthy)</option>
+      <option value="dark">Dark</option>
+      <option value="sunset">Sunset</option>
+      <option value="nature">Nature</option>
+    </select>
+    <label for="themeSelector">Select Theme</label>
+  </div>
+
+  <script>
+    // === Update Preview ===
+    function updatePreview() {
+      document.getElementById("prevName").textContent = document.getElementById("name").value;
+      document.getElementById("prevEmail").textContent = document.getElementById("email").value;
+      document.getElementById("prevPassword").textContent = document.getElementById("password").value ? "••••••••" : "";
+      document.getElementById("prevAge").textContent = document.getElementById("age").value;
+      document.getElementById("prevDob").textContent = document.getElementById("dob").value;
+      document.getElementById("prevGender").textContent = document.getElementById("gender").value;
+      document.getElementById("prevBio").textContent = document.getElementById("bio").value;
+      document.getElementById("prevNotif").textContent = document.getElementById("notif").checked ? "On" : "Off";
+      document.getElementById("prevDark").textContent = document.getElementById("darkmode").checked ? "On" : "Off";
+      const activeChips = [...document.querySelectorAll(".tag-input .tag")].map(t => t.textContent.replace("×","").trim());
+      document.getElementById("prevTags").textContent = activeChips.length ? activeChips.join(", ") : "None";
+      document.getElementById("prevFile").textContent = document.getElementById("upload").files.length
+        ? document.getElementById("upload").files[0].name
+        : "No file chosen";
+    }
+
+    // === Tags ===
+    const tagBox = document.getElementById("tagBox");
+    const tagInput = document.getElementById("tagInput");
+
+    tagBox.addEventListener("click", (e) => {
+      if (e.target.classList.contains("remove")) {
+        e.target.parentElement.remove();
+        updatePreview();
+      }
+    });
+
+    tagInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && tagInput.value.trim() !== "") {
+        e.preventDefault();
+        const newTag = document.createElement("span");
+        newTag.className = "tag";
+        newTag.innerHTML = `${tagInput.value} <span class="remove">&times;</span>`;
+        tagBox.insertBefore(newTag, tagInput);
+        tagInput.value = "";
+        updatePreview();
+      }
+    });
+
+    // === File Upload ===
+    const upload = document.getElementById("upload");
+    upload.addEventListener("change", () => updatePreview());
+
+    // === Theme Switching ===
+    function setTheme(theme) {
+      document.body.classList.remove("theme-default", "theme-dark", "theme-sunset", "theme-nature");
+      if (theme === "default") {
+        document.body.classList.add("theme-default");
+      } else if (theme === "dark") {
+        document.body.classList.add("theme-dark");
+      } else if (theme === "sunset") {
+        document.body.classList.add("theme-sunset");
+      } else if (theme === "nature") {
+        document.body.classList.add("theme-nature");
+      }
+    }
+
+    // Initialize preview + theme
+    updatePreview();
+    setTheme("default");
+  </script>
+</body>
+</html>
